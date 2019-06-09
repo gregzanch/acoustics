@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/gregzanch/acoustics.svg?branch=master)](https://travis-ci.com/gregzanch/acoustics)
+
 # Acoustics
 
 `acoustics` is a javascript library that provides useful functionality for acousticians.
