@@ -4,11 +4,11 @@ import { third_octave_all, whole_octave_all } from '../std/bands';
 
 /**
  * @description Returns the nominal octave band frequencies between a given range (inclusive)
- * @function OctaveBands
+ * @function Octave
  * @param {number} [start] start frequency
  * @param {number} [end] end frequency
  */
-export function OctaveBands(start: number, end: number): number[] {
+export function Octave(start: number, end: number): number[] {
   return whole_octave_all
     .map(x => x.Center)
     .filter(x => x >= Number(start || 0) && x <= Number(end || 20000));
@@ -16,11 +16,11 @@ export function OctaveBands(start: number, end: number): number[] {
 
 /**
  * @description Returns the nominal third octave band frequencies between a given range (inclusive)
- * @function ThirdOctaveBands
+ * @function ThirdOctave
  * @param {number} [start] start frequency
  * @param {number} [end] end frequency
  */
-export function ThirdOctaveBands(start?: number, end?: number): number[] {
+export function ThirdOctave(start?: number, end?: number): number[] {
   return third_octave_all
     .map(x => x.Center)
     .filter(x => x >= Number(start || 0) && x <= Number(end || 22000));
