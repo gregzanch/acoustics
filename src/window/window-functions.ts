@@ -1,11 +1,11 @@
-const hann = (n: number, N: number) =>
-  Math.pow(Math.sin((Math.PI * n) / (N - 1)), 2);
+import { Hann } from './functions/hann';
 
-/** Hann window
- * @function Hann
- * @param  {number} N Length of the window
- * @returns {number[]} a Hann window of length N
- */
-export function Hann(N: number): number[] {
-  return Object.keys(Array(N).fill(0)).map(x => hann(Number(x), N));
+export interface WindowFunctionDictionary {
+  [index: string]: (N: number) => number[];
 }
+
+export const WindowFunctions = {
+  Hann,
+} as WindowFunctionDictionary;
+
+export { Hann };

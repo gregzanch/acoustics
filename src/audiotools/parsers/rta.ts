@@ -1,47 +1,71 @@
 import { readFileSync } from 'fs';
+import { splitTabular } from '../../util/split-tabular';
 import { FrequencyLevel } from '../../interfaces/frequency-level';
 
-export class RTAFile {
-  filename: string;
-  module = 'RTA';
-  level: any[];
-  stats: object;
-  constructor(filename: string) {
-    this.filename = filename;
-    let foot: any[] = [];
-    let reductor: FrequencyLevel[] = [];
-    this.level = readFileSync(this.filename, 'utf8')
-      .split('\n')
-      .slice(2)
-      .map(x => x.split('\t'))
-      .reduce((a, b) => {
-        if (b[0].match(/^\d+\.?\d*$/gim)) {
-          const frequency = Number(b[0]);
-          const level = Number(b[1]);
-          const obj = {
-            frequency,
-            level,
-          };
-          a.push(obj);
-        } else {
-          foot.push(b);
-        }
-        return a;
-      }, reductor);
-    this.stats = Object.fromEntries(
-      foot.reduce((a, b) => {
-        if (b[0].length > 0) {
-          b[0] = b[0].replace(/\s/gm, '_');
-          a.push(b); //?
-        }
-        return a;
-      }, [])
-    );
-  }
-  getFrequencies() {
-    return this.level.map(x => x.frequency);
-  }
-  getLevels() {
-    return this.level.map(x => x.level);
-  }
+export interface RTAFileStats {
+  weighting: string;
+  octave_mode: string;
+  overall_dB?: string;
+  decay?: string;
+  source?: string;
+  latitude?: string;
+  longitude?: string;
+  saved?: string;
 }
+export interface RTAFileObject {
+  module: string;
+  data: FrequencyLevel[];
+  stats: RTAFileStats;
+}
+
+export function RTAFile(filename: string): RTAFileObject {
+  const module: string = 'RTA';
+  const regex = /^\d+\.?\d*$/gim;
+  const table = splitTabular(readFileSync(filename, 'utf8'), {
+    line: '\n',
+    cell: '\t',
+  }).slice(2);
+  const foot = table.filter(x => !x[0].match(regex));
+
+  const data: FrequencyLevel[] = table.reduce((a: FrequencyLevel[], b) => {
+    if (b[0].match(regex)) {
+      a.push({
+        frequency: Number(b[0]),
+        level: Number(b[1]),
+      });
+    }
+    return a;
+  }, []);
+  const _stats = foot.reduce((a: any, b: any) => {
+    if (b[0].length > 0) {
+      b[0] = b[0].replace(/\s/gm, '_');
+      a.push(b);
+    }
+    return a;
+  }, []);
+
+  const stats: RTAFileStats = {
+    octave_mode: _stats.octave_mode,
+    weighting: _stats.weighting,
+  };
+  stats.decay = _stats.decay || '';
+  stats.latitude = _stats.latitude || '';
+  stats.longitude = _stats.longitude || '';
+  stats.overall_dB = _stats.overall_dB || '';
+  stats.saved = _stats.saved || '';
+  stats.source = _stats.source || '';
+
+  const returnObject: RTAFileObject = {
+    module,
+    data,
+    stats,
+  };
+  return returnObject;
+}
+
+// export function RTAFiles(query: string | string[] | RegExp): RTAFileObject {
+//   if (query instanceof RegExp) {
+
+//   }
+//   else if ()
+// }

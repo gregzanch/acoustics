@@ -1,3 +1,7 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib/"
+    "typescript.tsdk": "node_modules/typescript/lib/",
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3",
+    "python.linting.pylintEnabled": false,
+    "python.linting.banditEnabled": true,
+    "python.linting.enabled": false
 }

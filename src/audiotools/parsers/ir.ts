@@ -1,11 +1,8 @@
 import { readFileSync } from 'fs';
+import { splitTabular } from '../../util/split-tabular';
 
 export function IRFile(file: string) {
   let ir = readFileSync(file, 'utf8');
-
-  function aoaSplit(str: string, nl = '\n', del = '\t') {
-    return str.split(nl).map(x => x.split(del));
-  }
 
   let categories = [
     'head',
@@ -24,7 +21,7 @@ export function IRFile(file: string) {
   }, reductor);
 
   function formatOctave(str: string) {
-    let split = aoaSplit(str);
+    let split = splitTabular(str);
     let head = split[0];
     return split.slice(1).map((x: any) => {
       let reductor2: any = {};
@@ -45,7 +42,7 @@ export function IRFile(file: string) {
     });
   }
   function formatThirdOctave(str: string) {
-    let split = aoaSplit(str);
+    let split = splitTabular(str);
     let head = split[0];
     return split.slice(1).map((x: any) => {
       let reductor2: any = {};
@@ -67,7 +64,7 @@ export function IRFile(file: string) {
   }
 
   function formatImpulse(str: string) {
-    return aoaSplit(str)
+    return splitTabular(str)
       .slice(1)
       .map(x => {
         return {
@@ -78,7 +75,7 @@ export function IRFile(file: string) {
   }
 
   function formatETC(str: string) {
-    return aoaSplit(str)
+    return splitTabular(str)
       .slice(1)
       .map(x => {
         return {
@@ -89,7 +86,7 @@ export function IRFile(file: string) {
   }
 
   function formatFFT(str: string) {
-    return aoaSplit(str)
+    return splitTabular(str)
       .slice(1)
       .map(x => {
         return {
@@ -100,7 +97,7 @@ export function IRFile(file: string) {
   }
 
   function formatSchroder(str: string) {
-    return aoaSplit(str)
+    return splitTabular(str)
       .slice(1)
       .map(x => {
         return {
@@ -111,6 +108,7 @@ export function IRFile(file: string) {
   }
 
   return {
+    module: 'IR',
     octave: formatOctave(sections.octave),
     third_octave: formatThirdOctave(sections.third_octave),
     ir: formatImpulse(sections.impulse),

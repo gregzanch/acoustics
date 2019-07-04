@@ -1,46 +1,37 @@
 import { readFileSync } from 'fs';
-import { FrequencyLevel } from '../../interfaces/frequency-level';
-export class FFTFile {
-  filename: string;
-  module = 'FFT';
-  level: any[];
-  stats: object;
-  constructor(filename: string) {
-    this.filename = filename;
-    let foot: any[] = [];
-    let reductor: FrequencyLevel[] = [];
-    this.level = readFileSync(this.filename, 'utf8')
-      .split('\n')
-      .slice(2)
-      .map(x => x.split('\t'))
-      .reduce((a, b) => {
-        if (b[0].match(/^\d+\.?\d*$/gim)) {
-          const frequency = Number(b[0]);
-          const level = Number(b[1]);
-          const obj = {
-            frequency,
-            level,
-          };
-          a.push(obj);
-        } else {
-          foot.push(b);
-        }
-        return a;
-      }, reductor);
-    this.stats = Object.fromEntries(
-      foot.reduce((a, b) => {
-        if (b[0].length > 0) {
-          b[0] = b[0].replace(/\s/gm, '_');
-          a.push(b); //?
-        }
-        return a;
-      }, [])
-    );
-  }
-  getFrequencies() {
-    return this.level.map(x => x.frequency);
-  }
-  getLevels() {
-    return this.level.map(x => x.level);
-  }
+import { splitTabular } from '../../util/split-tabular';
+
+interface fl {
+  frequency: number;
+  level: number;
+}
+
+export function FFTFile(filename: string) {
+  const module = 'FFT';
+  const regex = /^\d+\.?\d*$/gim;
+  const table = splitTabular(readFileSync(filename, 'utf8'), {
+    line: '\n',
+    cell: '\t',
+  }).slice(2);
+  const foot = table.filter(x => !x[0].match(regex));
+
+  const data = table.reduce((a: fl[], b) => {
+    if (b[0].match(regex)) {
+      a.push({
+        frequency: Number(b[0]),
+        level: Number(b[1]),
+      });
+    }
+    return a;
+  }, []);
+  const stats = Object.fromEntries(
+    foot.reduce((a: any, b: any) => {
+      if (b[0].length > 0) {
+        b[0] = b[0].replace(/\s/gm, '_');
+        a.push(b);
+      }
+      return a;
+    }, [])
+  );
+  return { module, data, stats };
 }

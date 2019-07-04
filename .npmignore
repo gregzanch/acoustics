@@ -8,9 +8,11 @@ yarn-error.log*
 .nyc_output
 lib
 lib_test
+sandbox/
 
 # npmignore
 
 src/
 __tests__/
 .vscode/
+sandbox/

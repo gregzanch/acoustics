@@ -1,0 +1,40 @@
+RTA	AudioTools 	v10.18.2 SH Acoustics' iPad (2) battery  50%	10/10/18, 6:37 PM	Internal Mic 1 Low Range	582952DC-A40E-4911-A0B8-6E042B84FC1D
+Frequency	dB
+25	29.6
+32	30.5
+40	42.1
+50	52.3
+63	63.2
+80	72.7
+100	74.3
+125	78.2
+160	76.8
+200	76.5
+250	72.9
+315	69.3
+400	69.6
+500	65.2
+630	61.5
+800	72.5
+1000	72.4
+1250	73.5
+1600	64.6
+2000	66.9
+2500	62.8
+3150	65.8
+4000	63.4
+5000	64.9
+6300	63.5
+8000	65.1
+10000	64.7
+12500	61.9
+16000	56.2
+20000	46.1
+overall dB	80.8 dBA
+decay	Average
+weighting	Flat
+octave mode	1/3 Octave
+source	Internal Mic 1 Low Range
+latitude	0
+longitude	0
+saved	10/10/18, 6:37 PM

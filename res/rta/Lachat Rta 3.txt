@@ -1,0 +1,40 @@
+RTA	AudioTools 	v10.18.2 SH Acoustics' iPad (2) battery  61%	10/10/18, 6:06 PM	iAI2 Mic 1 Low Range	582952DC-A40E-4911-A0B8-6E042B84FC1D
+Frequency	dB
+25	51.1
+32	53.2
+40	52.2
+50	52.8
+63	55.1
+80	66.9
+100	69.5
+125	72.6
+160	69.6
+200	68.2
+250	60.3
+315	52
+400	50.3
+500	53.5
+630	58.4
+800	62.7
+1000	67.2
+1250	68.5
+1600	65.8
+2000	58.7
+2500	61.8
+3150	61.1
+4000	56.7
+5000	56
+6300	56.1
+8000	55.6
+10000	48.6
+12500	46.1
+16000	41
+20000	29.7
+overall dB	74.9 dBA
+decay	Average
+weighting	Flat
+octave mode	1/3 Octave
+source	iAI2 Mic 1 Low Range
+latitude	0
+longitude	0
+saved	10/10/18, 6:06 PM
