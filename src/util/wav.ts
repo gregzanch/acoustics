@@ -291,15 +291,24 @@ export function decode(buffer: Buffer | any): any {
           channels,
           samples
         );
-        return { sampleRate, channelData };
+        return {
+          sampleRate,
+          channelData,
+        };
         break;
     }
     pos = next;
   }
 }
-
-export function encode(channelData: any, opts: any) {
-  let sampleRate = opts.sampleRate || 16000;
+export interface encodeParams {
+  sampleRate: number;
+  floatingPoint?: boolean;
+  float?: boolean;
+  bitDepth: number;
+  channels: number;
+}
+export function encode(channelData: any, opts: encodeParams) {
+  let sampleRate = opts.sampleRate || 48000;
   let floatingPoint = !!(opts.float || opts.floatingPoint);
   let bitDepth = floatingPoint ? 32 : opts.bitDepth | 0 || 16;
   let channels = channelData.length;

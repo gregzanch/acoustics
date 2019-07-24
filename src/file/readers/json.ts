@@ -4,11 +4,7 @@ import { strictEqual } from 'assert';
 
 export function json(filename: string, sync: boolean = true) {
   let ext = extname(filename).toLowerCase();
-  strictEqual(
-    ext,
-    '.json',
-    `readWAVFile does not accept ${ext} files, only .json files`
-  );
+  strictEqual(ext, '.json', `not accept ${ext} files, only .json files`);
 
   if (sync) return JSON.parse(readFileSync(filename, 'utf8'));
   return new Promise(function(resolve) {

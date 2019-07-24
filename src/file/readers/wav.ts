@@ -8,7 +8,7 @@ export function wav(filename: string, sync: boolean = true): any {
   strictEqual(
     extname(filename).toLowerCase(),
     '.wav',
-    `readWAVFile does not accept ${ext} files, only .wav file`
+    `not accept ${ext} files, only .wav file`
   );
 
   if (sync) return decode(readFileSync(filename));

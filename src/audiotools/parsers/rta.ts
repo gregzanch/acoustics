@@ -18,7 +18,7 @@ export interface RTAFileObject {
   stats: RTAFileStats;
 }
 
-export function RTAFile(filename: string): RTAFileObject {
+export function RTAFile(filename: string, arrays: boolean = false) {
   const module: string = 'RTA';
   const regex = /^\d+\.?\d*$/gim;
   const table = splitTabular(readFileSync(filename, 'utf8'), {
@@ -27,15 +27,31 @@ export function RTAFile(filename: string): RTAFileObject {
   }).slice(2);
   const foot = table.filter(x => !x[0].match(regex));
 
-  const data: FrequencyLevel[] = table.reduce((a: FrequencyLevel[], b) => {
-    if (b[0].match(regex)) {
-      a.push({
-        frequency: Number(b[0]),
-        level: Number(b[1]),
-      });
-    }
-    return a;
-  }, []);
+  if (arrays) {
+  }
+  const data = arrays
+    ? table.reduce(
+        (a: any, b) => {
+          if (b[0].match(regex)) {
+            a.frequency.push(Number(b[0]));
+            a.level.push(Number(b[1]));
+          }
+          return a;
+        },
+        {
+          frequency: [],
+          level: [],
+        }
+      )
+    : table.reduce((a: FrequencyLevel[], b) => {
+        if (b[0].match(regex)) {
+          a.push({
+            frequency: Number(b[0]),
+            level: Number(b[1]),
+          });
+        }
+        return a;
+      }, []);
   const _stats = foot.reduce((a: any, b: any) => {
     if (b[0].length > 0) {
       b[0] = b[0].replace(/\s/gm, '_');
