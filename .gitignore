@@ -7,3 +7,6 @@ yarn-error.log*
 lib
 lib_test
 sandbox/
+playground/
+ext/
+

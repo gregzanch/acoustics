@@ -31,27 +31,27 @@ export function RTAFileFromString(str: string, arrays: boolean = false) {
   }
   const data = arrays
     ? table.reduce(
-      (a: any, b) => {
+        (a: any, b) => {
+          if (b[0].match(regex)) {
+            a.frequency.push(Number(b[0]));
+            a.level.push(Number(b[1]));
+          }
+          return a;
+        },
+        {
+          frequency: [],
+          level: [],
+        }
+      )
+    : table.reduce((a: FrequencyLevel[], b) => {
         if (b[0].match(regex)) {
-          a.frequency.push(Number(b[0]));
-          a.level.push(Number(b[1]));
+          a.push({
+            frequency: Number(b[0]),
+            level: Number(b[1]),
+          });
         }
         return a;
-      },
-      {
-        frequency: [],
-        level: [],
-      }
-    )
-    : table.reduce((a: FrequencyLevel[], b) => {
-      if (b[0].match(regex)) {
-        a.push({
-          frequency: Number(b[0]),
-          level: Number(b[1]),
-        });
-      }
-      return a;
-    }, []);
+      }, []);
   const _stats = foot.reduce((a: any, b: any) => {
     if (b[0].length > 0) {
       b[0] = b[0].replace(/\s/gm, '_');

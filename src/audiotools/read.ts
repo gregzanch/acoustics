@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { FFTFile, RTAFile, IRFile, ETCFile } from './parsers';
+import { FFTFile, RTAFile, IRFile, ETCFile, SPLFile } from './parsers';
 
 export function readFile(
   filename: string,
@@ -22,6 +22,9 @@ export function readFile(
       break;
     case 'RTA':
       return RTAFile(filename);
+      break;
+    case 'SPL':
+      return SPLFile(filename);
       break;
   }
 }

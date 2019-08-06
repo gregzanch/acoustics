@@ -11,6 +11,9 @@ import * as Electrical from './electrical/electrical';
 import * as WindowFunctions from './window/window-functions';
 import * as Signals from './dsp/signals';
 
+export * from './io/io';
+export * from './util/dbaddition';
+export * from './util/sum';
 export * from './plot/plot';
 export * from './io/io';
 export * from './util/wav';
