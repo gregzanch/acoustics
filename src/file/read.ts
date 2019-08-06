@@ -4,6 +4,8 @@ import {
   IRFile,
   RTAFile,
   RTAFileFromString,
+  SPLFile,
+  SPLFileFromString,
 } from '../audiotools/parsers';
 import { wav } from './readers/wav';
 import { json } from './readers/json';
@@ -12,14 +14,16 @@ import { tsv } from './readers/tsv';
 import { DelimitedFileReader } from './readers/delimited';
 
 export {
+  DelimitedFileReader,
   RTAFileFromString,
-  wav,
+  SPLFileFromString,
+  SPLFile,
   ETCFile,
   FFTFile,
   IRFile,
   RTAFile,
+  wav,
   json,
-  DelimitedFileReader,
   csv,
   tsv,
 };

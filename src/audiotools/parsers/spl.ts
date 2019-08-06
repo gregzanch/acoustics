@@ -1,8 +1,7 @@
 import { readFileSync } from 'fs';
 import { splitTabular } from '../../util/split-tabular';
 
-
-export interface SPLData{
+export interface SPLData {
   point: string;
   LZeq: number | string;
   LAeq: number | string;
@@ -56,41 +55,51 @@ export function SPLFileFromString(str: string) {
 
   let found = false;
   const stats: any = [];
-  let rawdata = raw.reduce((a, b) => {
-    if (b[0].match(/^point/gmi)) {
-      found = true;
-    }
-    if (found) {
-      a.push(b);
-    }
-    else {
-      stats.push(b);
-    }
-    return a;
-  }, [] as string[][])
+  let rawdata = raw.reduce(
+    (a, b) => {
+      if (b[0].match(/^point/gim)) {
+        found = true;
+      }
+      if (found) {
+        a.push(b);
+      } else {
+        stats.push(b);
+      }
+      return a;
+    },
+    [] as string[][]
+  );
 
-  rawdata[0] = rawdata[0].map(x => x.replace('1/3 Octave ', '').replace(' ', ''));
+  rawdata[0] = rawdata[0].map(x =>
+    x.replace('1/3 Octave ', '').replace(' ', '')
+  );
 
-  const objarr = rawdata.slice(1).reduce((a, b) => {
-    const obj = {} as SPLData;
-    rawdata[0].forEach((x, i) => {
-      // @ts-ignore: Unreachable code error
-      obj[x] = b[i]
-    });
-    if (obj.point !== "") {
-      obj.point = obj.point.replace(/\"+/gmi, "").trim();
-      a.push(obj);
-    }
-    return a;
-  }, [] as SPLData[]);
+  const objarr = rawdata.slice(1).reduce(
+    (a, b) => {
+      const obj = {} as SPLData;
+      rawdata[0].forEach((x, i) => {
+        // @ts-ignore: Unreachable code error
+        obj[x] = b[i];
+      });
+      if (obj.point !== '') {
+        obj.point = obj.point.replace(/\"+/gim, '').trim();
+        a.push(obj);
+      }
+      return a;
+    },
+    [] as SPLData[]
+  );
 
   const returnObject: SPLFileObject = {
     header: stats[0],
-    stats: stats.slice(1).filter((x: any) => x[0].length > 0).reduce((a: any, b: any) => {
-      a[b[0]] = b[1];
-      return a;
-    }, {}),
-    data: objarr
+    stats: stats
+      .slice(1)
+      .filter((x: any) => x[0].length > 0)
+      .reduce((a: any, b: any) => {
+        a[b[0]] = b[1];
+        return a;
+      }, {}),
+    data: objarr,
   };
   return returnObject;
 }
@@ -98,4 +107,3 @@ export function SPLFileFromString(str: string) {
 export function SPLFile(filename: string) {
   return SPLFileFromString(readFileSync(filename, 'utf8'));
 }
-
